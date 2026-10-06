@@ -1,3 +1,4 @@
+// Member 1: Nahla
 // TransportNetwork.h
 // Shared declarations: Route, PassengerDemand and the TransportNetwork class.
 // Owner: Member 1 (graph core). Everybody includes this file.
@@ -15,6 +16,7 @@
 #include <functional>
 #include <sstream>
 #include <cstdlib>
+#include <cmath>
 
 using namespace std;
 
@@ -92,6 +94,23 @@ private:
     // Passenger demand records
     vector<PassengerDemand> demands;
 
+    // One shared Dijkstra result is used by options 5, 6 and 8.
+    struct JourneyResult
+    {
+        bool found = false;
+        double minutes = 0;
+        vector<string> locations;
+        vector<Route> legs;
+    };
+    JourneyResult calculateRoute(const string& from, const string& to,
+                                 const string& mode = "") const;
+    static bool parseDeparture(const string& time, int& minutes);
+    static string clockTime(double minutesAfterMidnight);
+
+    bool hasLastJourney = false;
+    string lastFrom, lastTo, lastDeparture;
+    int lastPassengerCount = 0;
+
 
 public:
 
@@ -108,7 +127,9 @@ public:
     // ---- Member 2: algorithms (algorithms.cpp) ----
     void BFS(string start);
     void findFastestRoute(string start, string destination, int passengers = 0);
-    void simulatePassengerJourney(string from, string to, int passengerCount);
+    void simulatePassengerJourney(string from, string to, int passengerCount,
+                                  string departure);
+    void simulateStoredJourney(int recordNumber);
 
     // ---- Member 3: demand and profiling (demand_profiling.cpp) ----
     void displayDemand();
