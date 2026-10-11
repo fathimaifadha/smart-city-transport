@@ -1,0 +1,17 @@
+# Compiled programs and objects
+*.exe
+*.o
+*.obj
+*.a
+*.dll
+build/
+# Generated Dev-C++ files
+Makefile.win
+*.layout
+*.dev.bak
+# Editor and Python caches
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+*.log

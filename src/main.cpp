@@ -1,3 +1,4 @@
+// Member 4: Ifadha
 // main.cpp
 // Member 4: console interface and city data.
 // clearScreen, displayMenu, city data (locations, routes, demand), menu loop,
@@ -25,7 +26,7 @@ void displayMenu()
     cout << "          SMART CITY TRANSPORT SYSTEM\n";
     cout << "====================================================\n";
 
-    cout << "\nFictional demo data - not real routes or timetables.\n";
+    cout << "\n";
     cout << "Assumed : Bus = 60 passengers; Train = 800 passengers.\n";
 
     cout << "\n1. Display complete transport network";
@@ -231,13 +232,41 @@ int main()
 
             case 6:
             {
-                string from, to, passengerInput;
-                int passengers;
+                string modeInput;
+                cout << "\n1. Use a stored passenger-demand record\n"
+                     << "2. Enter a custom journey\nChoose journey input (1-2): ";
+                if (!getline(cin, modeInput)) return 0;
+                istringstream modeStream(modeInput);
+                int mode;
                 char extra;
+                if (!(modeStream >> mode) || (modeStream >> extra) || (mode != 1 && mode != 2))
+                {
+                    cout << "\nPlease choose 1 or 2.\n";
+                    break;
+                }
+                if (mode == 1)
+                {
+                    city.displayDemand();
+                    cout << "\nEnter demand record number: ";
+                    string recordInput;
+                    if (!getline(cin, recordInput)) return 0;
+                    istringstream recordStream(recordInput);
+                    int record;
+                    if (!(recordStream >> record) || (recordStream >> extra))
+                        cout << "\nPlease enter a valid demand record number.\n";
+                    else
+                        city.simulateStoredJourney(record);
+                    break;
+                }
+
+                string from, to, departure, passengerInput;
+                int passengers;
                 cout << "\nEnter starting location: ";
                 if (!getline(cin, from)) return 0;
                 cout << "Enter destination: ";
                 if (!getline(cin, to)) return 0;
+                cout << "Enter departure time (HH:MM, 24-hour): ";
+                if (!getline(cin, departure)) return 0;
                 cout << "Enter number of passengers: ";
                 if (!getline(cin, passengerInput)) return 0;
                 istringstream input(passengerInput);
@@ -246,7 +275,7 @@ int main()
                     cout << "\nPassenger count must be a positive whole number.\n";
                     break;
                 }
-                city.simulatePassengerJourney(from, to, passengers);
+                city.simulatePassengerJourney(from, to, passengers, departure);
                 break;
             }
             // ------------------------------------------------
