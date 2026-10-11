@@ -10,7 +10,7 @@ route, planning passenger journeys and comparing transport efficiency.
 | 1 | Nahla | Graph core: build the graph, display routes and locations | `src/TransportNetwork.h`, `src/network.cpp` |
 | 2 | Amna | BFS, Dijkstra, timed journeys and vehicle counts | `src/algorithms.cpp` |
 | 3 | Nafrin | Passenger demand and system profiling | `src/demand_profiling.cpp` |
-| 4 | Ifadha | Menu, input checking, city data, documentation and testing | `src/main.cpp`, `README.md`, `tests/` |
+| 4 | Ifadha | Menu, input checking, city data and documentation | `src/main.cpp`, `README.md` |
 
 ## Folder structure
 
@@ -19,20 +19,17 @@ smart-city-transport/
 |-- README.md
 |-- .gitignore
 |-- SmartCityTransport.dev
-|-- src/
-|   |-- TransportNetwork.h
-|   |-- network.cpp
-|   |-- algorithms.cpp
-|   |-- demand_profiling.cpp
-|   `-- main.cpp
-`-- tests/
-    |-- test_cli.py
-    `-- network_edge_cases.cpp
+`-- src/
+    |-- TransportNetwork.h
+    |-- network.cpp
+    |-- algorithms.cpp
+    |-- demand_profiling.cpp
+    `-- main.cpp
 ```
 
 ## Build and run
 
-Requires a C++11 compiler or later. Python 3 is optional, for running the tests.
+Requires a C++11 compiler or later.
 
 ### Dev-C++ on Windows
 
@@ -125,21 +122,6 @@ Custom journeys do not change the stored demand total of 840 passengers.
 Option 5 does not replace the journey used by profiling. Invalid journey input
 preserves the last successful journey. Midnight arrivals show a day offset.
 
-## Tests
-
-After compiling, run:
-
-```sh
-python tests/test_cli.py SmartCityTransport.exe
-g++ -std=c++11 -Wall -Wextra tests/network_edge_cases.cpp src/network.cpp src/algorithms.cpp src/demand_profiling.cpp -o edge-tests.exe
-./edge-tests.exe
-```
-
-The CLI suite covers 97 scenarios, including all 64 location pairs, transport
-filters, stored/custom journeys, invalid input, midnight and large passenger
-counts. It independently checks route times using Floyd-Warshall. The C++ checks
-cover empty/disconnected networks, fractional times and unavailable capacity.
-
 ## Upload to GitHub
 
 Create an empty GitHub repository, open a terminal in this folder and run:
@@ -155,4 +137,4 @@ git push -u origin main
 
 Replace `YOUR-USERNAME` with your GitHub username and use your repository URL.
 The `.gitignore` keeps executables, object files and generated editor files out
-of commits. Source files, the Dev-C++ project, documentation and tests are included.
+of commits. Source files, the Dev-C++ project and documentation are included.
